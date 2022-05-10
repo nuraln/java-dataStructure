@@ -1,0 +1,171 @@
+---------------------Source Code----------------------
+
+1.file node.java
+
+public class Node {
+     int data;
+    Node next;
+    Node prev;
+
+    public Node(int data){
+        this.data = data;
+    }
+
+    public void tampil(){
+        System.out.print("{"+data+"}");
+    }
+}
+
+
+
+
+
+2. file DoubleLinkedList.java
+
+public class DoubleLinkedList {
+    Node first;
+    Node last;
+
+    public DoubleLinkedList() {
+        first = null;
+        last = null;
+    }
+
+    public boolean isEmpty(){
+        return (first==null);
+    }
+
+
+    public void insertFirst(int data){
+        Node node = new Node(data);
+        if(isEmpty()){
+            last = node;
+        }else{
+            first.prev = node;
+        }
+
+        node.next = first;
+        first = node;
+    }
+
+
+    public void insertLast(int data){
+        Node node = new Node(data);
+        if( isEmpty() )
+            first = node;
+        else{
+            last.next = node;
+            node.prev = last;
+        }
+        last = node;
+    }
+
+    public Node deleteFirst(){
+        Node temp = first;
+        if(first.next == null)
+            last = null;
+        else
+            first.next.prev = null;
+        first = first.next;
+        return temp;
+    }
+
+ 
+    public Node deleteLast(){
+        Node temp = last;
+        if(first.next == null)
+            first = null;
+        else
+            last.prev.next = null;
+        last = last.prev;
+        return temp;
+    }
+
+   
+    public boolean insertAfter(int key, int data){
+        Node current = first;
+        while(current.data != key){
+            current = current.next;
+            if(current == null)
+            return false;
+        }
+        Node node = new Node(data);
+
+        if(current==last){
+            node.next = null;
+            last = node;
+        }else{
+            node.next = current.next;
+         
+            current.next.prev = node;
+        }
+        node.prev = current;
+        current.next = node;
+        return true;
+    }
+
+  
+    public Node deleteKey(int key){
+        Node current = first;
+        while(current.data != key){
+            current = current.next;
+        if(current == null)
+            return null;
+        }
+        if(current==first)
+            first = current.next;
+        else
+            current.prev.next = current.next;
+        if(current==last)
+            last = current.prev;
+        else
+            current.next.prev = current.prev;
+            return current;
+    }
+
+    public void displayForward(){
+        System.out.print("List (first-->last): ");
+        Node current = first;
+
+        while(current != null){
+            current.tampil();
+            current = current.next;
+        }
+        System.out.println("");
+    }
+
+    public void displayBackward(){
+        System.out.print("List (last-->first): ");
+        Node current = last;
+        while(current != null){
+            current.tampil();
+            current = current.prev;
+        }
+        System.out.println("");
+    }
+}
+
+
+3. file DoubleLinkedListApp.java
+
+public class DoubleLinkedListApp {
+    public static void main(String[] args){
+        DoubleLinkedList theList = new DoubleLinkedList();
+        theList.insertFirst(22);
+        theList.insertFirst(20);
+        theList.insertFirst(18);
+        theList.insertLast(57);
+        theList.insertLast(52);
+        theList.insertLast(61);
+        theList.displayForward();
+        theList.displayBackward();
+        theList.deleteFirst();
+        theList.deleteLast();
+        theList.deleteKey(61);
+        theList.displayForward();
+        theList.insertAfter(57, 18);
+        theList.insertAfter(29, 10);
+        theList.displayForward();
+    }
+}
+

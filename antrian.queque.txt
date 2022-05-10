@@ -1,0 +1,66 @@
+import java.util.Scanner;
+
+public class Antrian1 {
+ int id;
+ String nama,perlu;
+ Antrian1 next;
+ 
+ static Scanner in = new Scanner(System.in);
+ static Scanner str = new Scanner (System.in);
+public void input(){ 
+    System.out.print("input no id    :");
+    id=in.nextInt();
+    System.out.print("input nama     :");
+    nama=str.nextLine();
+    System.out.print("input keperluan :");
+    perlu=null;
+   
+}
+public void read(){
+    System.out.println("|| "+id+"\t||"+nama+"\t||"+perlu+"\t||");
+}
+public static void main(String[]args){
+int menu =0;
+linked que=new linked();
+while(menu!=4){
+    System.out.print("1.input antrian\n2.selesai diproses\n3.lihat antrian\n4.keluar:");
+ System.out.print("\n--silahkan pilih menu--\n");
+ menu=in.nextInt();
+ if(menu==1)que.enqueque();
+ else if(menu==2)que.dequeque();
+ else if(menu==3)que.view();
+ else if(menu==4)System.out.println("- keluar -");
+ else System.out.println("- salah -");
+ System.out.println("");
+     }
+    }
+}
+
+class linked{
+Antrian1 head, tail;
+public linked(){
+    head=null;
+    tail=null;
+}
+public void enqueque(){
+    Antrian1 baru=new Antrian1();
+    baru.input();
+    if(head==null)head=baru;
+    else tail.next=baru;
+    tail=baru;
+}
+public void dequeque(){
+if(head==null)System.out.println("- kosong -");
+else{
+    System.out.println("keluar data dengan id :"+head.id);
+    head=head.next;
+}
+}
+public void view(){
+if(head==null)System.out.println("- kosong -");
+else{
+System.out.println("||id\t||nama\t||keperluan\t||");
+for(Antrian1 a=head; a!=null; a=a.next) a.read();
+}
+}
+}
